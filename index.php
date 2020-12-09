@@ -7,4 +7,6 @@ spl_autoload_register(function ($class_name) {
     }
 });
 
+// I could load the database here, although that would mean initialization even if not needed on tha page
+
 require_once "Routes.php";
