@@ -7,13 +7,13 @@ class Database
 
     private static function connect()
     {
-        if (!isset($pdo)) {
+        if (!isset(self::$pdo)) {
             $ini = parse_ini_file("dbconfig.ini");
-            $pdo = new PDO("mysql:host={$ini["host"]};dbname={$ini["dbname"]};charset=utf8", $ini["user"], $ini["password"]);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            self::$pdo = new PDO("mysql:host={$ini["host"]};dbname={$ini["dbname"]};charset=utf8", $ini["user"], $ini["password"]);
+            self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
 
-        return $pdo;
+        return self::$pdo;
     }
 
     public static function query($query, $params = array())
