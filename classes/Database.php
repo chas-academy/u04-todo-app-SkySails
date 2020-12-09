@@ -3,11 +3,16 @@
 class Database
 {
 
+    private static $pdo = null;
+
     private static function connect()
     {
-        $ini = parse_ini_file("dbconfig.ini");
-        $pdo = new PDO("mysql:host={$ini["host"]};dbname={$ini["dbname"]};charset=utf8", $ini["user"], $ini["password"]);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        if (!isset($pdo)) {
+            $ini = parse_ini_file("dbconfig.ini");
+            $pdo = new PDO("mysql:host={$ini["host"]};dbname={$ini["dbname"]};charset=utf8", $ini["user"], $ini["password"]);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        }
+
         return $pdo;
     }
 
