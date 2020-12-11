@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/46646495/101915074-69874180-3bc5-11eb-9ab8-d3e7fe2c3e81.png">
+  <img src="https://user-images.githubusercontent.com/46646495/101920713-6b083800-3bcc-11eb-816f-c9d40d9b68d9.png">
 </p>
 
 # u04-todo-app
