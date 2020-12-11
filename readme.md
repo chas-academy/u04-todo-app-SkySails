@@ -12,6 +12,7 @@ TodoApp is a todo app (duh) that lets you easily manage and create todo lists an
 - [x] Database interactions using models
 - [x] Authentication using PHP Sessions
 - [x] Controller middleware for protected routes
+- [ ] Include final SQL file in repository
 - [ ] Actual todo functionality
 
 ## Tech
