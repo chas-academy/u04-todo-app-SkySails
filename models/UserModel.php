@@ -12,10 +12,37 @@ class UserModel extends Database
     {
         if (isset($params)) {
             extract($params);
-            $id = uniqid();
-            $pw_hash = password_hash($password, PASSWORD_BCRYPT);
 
-            self::query('INSERT INTO users (id, name, email, pw_hash) VALUES (?, ?, ?, ?)', array($id, $name, $email, $pw_hash));
+            if ($name !== "" && $email !== "" && $password !== '') {
+                $id = uniqid();
+                $pw_hash = password_hash($password, PASSWORD_BCRYPT);
+                self::query('INSERT INTO users (id, name, email, pw_hash) VALUES (?, ?, ?, ?)', array($id, $name, $email, $pw_hash));
+            } else {
+                echo "Something went wrong.";
+            }
+        }
+
+    }
+    public static function signinUser($params)
+    {
+        extract($params);
+        if ($password !== "" && $email !== "") {
+
+            $user = self::query('SELECT * FROM users WHERE email = ?', array($email))[0];
+
+            if (password_verify($password, $user["pw_hash"])) {
+                // Password is correct, start a new session
+                session_start();
+
+                // Store data in session variables
+                $_SESSION["loggedin"] = true;
+                $_SESSION["id"] = $user["id"];
+                $_SESSION["username"] = $user["name"];
+
+                // Redirect user to welcome page
+                header("location: /");
+            }
+
         }
 
     }
