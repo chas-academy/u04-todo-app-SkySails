@@ -1,7 +1,3 @@
-DirectoryIndex index.php
-
-
-# enable apache rewrite engine
 RewriteEngine on
 
 # set your rewrite base
