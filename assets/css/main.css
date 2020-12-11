@@ -106,7 +106,7 @@ aside #sidenav-list {
           align-items: center;
   padding: 1em 0;
   list-style: none;
-  background-color: #06101f;
+  background-color: #071325;
 }
 
 aside #sidenav-list a {
@@ -205,5 +205,9 @@ main h2 {
 #account-form input:focus {
   -webkit-box-shadow: 0 0 0 3px #2394fea9;
           box-shadow: 0 0 0 3px #2394fea9;
+}
+
+input[type='checkbox'] {
+  margin-right: 10px;
 }
 /*# sourceMappingURL=main.css.map */
