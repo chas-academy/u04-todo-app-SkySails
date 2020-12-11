@@ -1,0 +1,34 @@
+{% extends 'auth.html.twig' %}
+
+{% block title %}
+  Login
+{% endblock %}
+
+{% block content %}
+  <main>
+    <section id="form-section">
+      <span id="logo">TodoApp</span>
+      <form method="post">
+        <h2>
+          Login
+        </h2>
+        <p>
+          Please login to continue
+        </p>
+
+        <label for="name">Email</label>
+        <input type="email" name="email" id="email" />
+        <label for="name">Password</label>
+        <input type="password" name="password" id="password" />
+        <button onclick="document.querySelector('button').classList.add('clicked')"
+          class="submit-btn">
+          Sign in
+        </button>
+        <span>Need an account? <a href="/register">Register now</a></span>
+      </form>
+    </section>
+    <section id="info-section">
+      <img id="waves" src="/assets/img/waves.svg" alt="Waves" />
+    </section>
+  </main>
+{% endblock %}

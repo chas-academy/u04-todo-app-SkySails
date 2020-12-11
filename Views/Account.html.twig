@@ -1,0 +1,25 @@
+{% extends 'app.html.twig' %}
+
+{% block title %}
+  Account
+{% endblock %}
+{% block head %}
+  {{ parent() }}
+{% endblock %}
+{% block breadcrumb %}
+  Account
+{% endblock %}
+
+{% block content %}
+  <main>
+    <h2>
+      Account information
+    </h2>
+    <form id="account-form" action="">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" value="{{ name }}" disabled />
+      <label for="name">Email</label>
+      <input type="text" id="email" name="email" value="{{ email }}" disabled />
+    </form>
+  </main>
+{% endblock %}

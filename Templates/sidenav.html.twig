@@ -1,0 +1,25 @@
+<aside>
+  <ul id="sidenav-list">
+    <li>
+      <a href="/" class="{{ route == '/' ? 'active' }}">
+        <ion-icon name="today-outline"></ion-icon> <span>Inbox</span>
+      </a>
+    </li>
+    <ul>
+      <li>
+        <a href="/account" class="{{ route == '/account' ? 'active' }}">
+          <ion-icon name="person-circle-outline"></ion-icon> <span>Account</span>
+        </a>
+      </li>
+      <li>
+        <a href="/logout.php" class="destructive">
+          <ion-icon name="log-out-outline"></ion-icon> <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+  </ul>
+</aside>
+<script type="module"
+  src="https://unpkg.com/ionicons@5.2.3/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule=""
+  src="https://unpkg.com/ionicons@5.2.3/dist/ionicons/ionicons.js"></script>

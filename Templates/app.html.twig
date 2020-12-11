@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% block head %}
+      <link rel="stylesheet" href="/assets/css/main.css" />
+      <title>
+        {% block title %}
+
+        {% endblock %}- Todoapp
+      </title>
+    {% endblock %}
+  </head>
+  <body>
+    <header>
+      <span id="logo">TodoApp</span><span id="breadcrumb">
+        {% block breadcrumb %}
+
+        {% endblock %}
+      </span>
+    </header>
+    {% block content %}
+
+    {% endblock %}
+    {% include 'sidenav.html.twig' %}
+  </body>
+</html>
