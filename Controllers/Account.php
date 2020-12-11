@@ -2,8 +2,12 @@
 
 class Account extends Controller
 {
-    public static function doSomething()
+    public static function RenderView($id = null)
     {
-        print_r(self::query("SELECT * FROM users"));
+        self::middleware();
+        $id = $id or $id = $_SESSION["id"];
+        $account_data = UserModel::getProfile($id);
+
+        echo Twig::render("Account", $account_data);
     }
 }
