@@ -5,6 +5,13 @@ require __DIR__ . '\..\vendor\autoload.php';
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
+$GLOBALS['errors'] = [
+    "not_found" => "No user was found with the entered email address.",
+    "db_err" => "Something went wrong. Please try again later.",
+    "invalid_details" => "Invalid password.",
+    "already_registered" => "A user with the entered email address already exists.",
+];
+
 class Twig
 {
     private static $twig = null;
@@ -17,6 +24,9 @@ class Twig
             self::$twig->addGlobal("route", $_SERVER["REQUEST_URI"]);
             if (isset($_SESSION)) {
                 self::$twig->addGlobal("session", $_SESSION);
+            }
+            if (isset($_GET["err"])) {
+                self::$twig->addGlobal("error", $GLOBALS["errors"][$_GET["err"]]);
             }
         }
 

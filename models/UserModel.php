@@ -14,21 +14,25 @@ class UserModel extends Database
             extract($params);
 
             if ($name !== "" && $email !== "" && $password !== '') {
-                $id = uniqid();
-                $pw_hash = password_hash($password, PASSWORD_BCRYPT);
-                self::query('INSERT INTO users (id, name, email, pw_hash) VALUES (?, ?, ?, ?)', array($id, $name, $email, $pw_hash));
+                try {
+                    $id = uniqid();
+                    $pw_hash = password_hash($password, PASSWORD_BCRYPT);
+                    self::query('INSERT INTO users (id, name, email, pw_hash) VALUES (?, ?, ?, ?)', array($id, $name, $email, $pw_hash));
 
-                session_start();
+                    session_start();
 
-                // Store data in session variables
-                $_SESSION["loggedin"] = true;
-                $_SESSION["id"] = $id;
-                $_SESSION["username"] = $name;
+                    // Store data in session variables
+                    $_SESSION["loggedin"] = true;
+                    $_SESSION["id"] = $id;
+                    $_SESSION["username"] = $name;
 
-                // Redirect user to welcome page
-                header("location: /");
+                    // Redirect user to welcome page
+                    header("location: /");
+                } catch (PDOException $e) {
+                    header("location: /register?err=already_registered");
+                }
             } else {
-                echo "Something went wrong.";
+                header("location: /register?err=invalid_details");
             }
         }
 
@@ -38,19 +42,31 @@ class UserModel extends Database
         extract($params);
         if ($password !== "" && $email !== "") {
 
-            $user = self::query('SELECT * FROM users WHERE email = ?', array($email))[0];
+            try {
+                $user = self::query('SELECT * FROM users WHERE email = ?', array($email));
 
-            if (password_verify($password, $user["pw_hash"])) {
-                // Password is correct, start a new session
-                session_start();
+                if (isset($user[0])) {
+                    $user = $user[0];
 
-                // Store data in session variables
-                $_SESSION["loggedin"] = true;
-                $_SESSION["id"] = $user["id"];
-                $_SESSION["username"] = $user["name"];
+                    if (password_verify($password, $user["pw_hash"])) {
+                        // Password is correct, start a new session
+                        session_start();
 
-                // Redirect user to welcome page
-                header("location: /");
+                        // Store data in session variables
+                        $_SESSION["loggedin"] = true;
+                        $_SESSION["id"] = $user["id"];
+                        $_SESSION["username"] = $user["name"];
+
+                        // Redirect user to welcome page
+                        header("location: /");
+                    } else {
+                        header("location: /login?err=invalid_details");
+                    }
+                } else {
+                    header("location: /login?err=not_found");
+                }
+            } catch (PDOException $e) {
+                header("location: /login?err=db_err");
             }
 
         }
