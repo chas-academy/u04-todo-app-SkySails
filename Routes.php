@@ -61,6 +61,16 @@ Route::add('/api/lists/:id', function ($list_id) {
     TodoModel::deleteList($list_id);
 }, "delete");
 
+// Delete completed todos in list with id
+Route::add('/api/lists/:id', function ($list_id) {
+    TodoModel::deleteAllDoneInList($list_id);
+}, "purge");
+
+// Complete all todos in list with id
+Route::add('/api/lists/:id', function ($list_id) {
+    TodoModel::completeAllInList($list_id);
+}, "patch");
+
 // Get items
 Route::add('/api/items', function () {
     echo "Get all items";
