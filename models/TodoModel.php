@@ -15,7 +15,7 @@ class TodoModel extends Database
     public static function getListsWithTodos()
     {
         if (isset($_SESSION["id"])) {
-            $data = self::query('SELECT lists.NAME AS list_name, lists.id AS list_id, todos.id, todos.created_by, todos.title, todos.description, todos.STATUS, todos.created_at FROM lists LEFT JOIN todos ON lists.id = todos.list_id WHERE lists.created_by = ? ', array($_SESSION["id"]));
+            $data = self::query('SELECT lists.NAME AS list_name, lists.id AS list_id, todos.id, todos.created_by, todos.title, todos.description, todos.status, todos.created_at FROM lists LEFT JOIN todos ON lists.id = todos.list_id WHERE lists.created_by = ? ', array($_SESSION["id"]));
 
             // var_dump($data);
 
@@ -69,11 +69,11 @@ class TodoModel extends Database
         if (isset($params) && isset($id)) {
             extract($params);
 
-            if (isset($title) && $title !== "" && isset($description) && $description !== "" && isset($status) && $status !== "") {
+            if (isset($title) && $title !== "" && isset($description) && isset($status) && $status !== "") {
                 try {
                     self::query('UPDATE todos SET `title` = ?, `description` = ?,  `status` = ? WHERE id = ?', array($title, $description, $status, $id));
                     http_response_code(200);
-                    echo json_encode(["success" => "true", "message" => "Todo updated successfully!"]);
+                    echo json_encode(["success" => "true", "message" => "Todo updated successfully!", "params" => $params]);
                 } catch (PDOException $e) {
                     http_response_code(500);
                     echo json_encode(["success" => "false", "message" => $e->getMessage()]);
@@ -130,6 +130,42 @@ class TodoModel extends Database
                 self::query('DELETE FROM lists WHERE id = ?', array($id));
                 http_response_code(200);
                 echo json_encode(["success" => "true", "message" => "List deleted successfully!"]);
+            } catch (PDOException $e) {
+                http_response_code(500);
+                echo json_encode(["success" => "false", "message" => $e->getMessage()]);
+            }
+        } else {
+            http_response_code(400);
+            echo json_encode(["success" => "false", "message" => "Insufficient parameters", "validSession" => isset($_SESSION)]);
+        }
+    }
+
+    public static function completeAllInList(string $id)
+    {
+        if (isset($id) && $id !== "") {
+            try {
+                self::query('UPDATE todos SET `status` = 1 WHERE list_id = ?', array($id));
+                http_response_code(200);
+                echo json_encode(["success" => "true", "message" => "Todos updated successfully!"]);
+            } catch (PDOException $e) {
+                http_response_code(500);
+                echo json_encode(["success" => "false", "message" => $e->getMessage()]);
+            }
+        } else {
+            http_response_code(400);
+            echo json_encode(["success" => "false", "message" => "Insufficient parameters"]);
+        }
+    }
+
+    public static function deleteAllDoneInList(string $id)
+    {
+        session_start();
+
+        if (isset($id) && $id !== "" && isset($_SESSION)) {
+            try {
+                self::query('DELETE FROM todos WHERE `status` = "1" AND `list_id` = ?', array($id));
+                http_response_code(200);
+                echo json_encode(["success" => "true", "message" => "Completed todos deleted successfully!"]);
             } catch (PDOException $e) {
                 http_response_code(500);
                 echo json_encode(["success" => "false", "message" => $e->getMessage()]);
