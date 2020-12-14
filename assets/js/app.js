@@ -35,13 +35,14 @@ function handleEditTodo(e) {
   if (["P", "H3"].includes(e.target.tagName)) {
     const textarea = document.createElement("textarea");
     const originalEl = e.target;
+    const originalText = originalEl.innerText;
     textarea.value = originalEl.innerText;
     textarea.oninput = (e) => adjustTAHeight(e);
     textarea.onblur = (e) => {
       const parent = e.target.parentElement;
+      if (originalText !== e.target.value) sendEvent("update", parent);
       originalEl.innerText = e.target.value;
       parent.replaceChild(originalEl, e.target);
-      sendEvent("update", parent);
     };
     textarea.className =
       e.target.tagName === "P" ? "content-textarea" : "title-textarea";
@@ -119,21 +120,26 @@ function handleTodoForm(e) {
 }
 
 function updateTodo(e) {
-  const todoEl = e.target.closest(".todo-card");
-  const id = todoEl.dataset.todoid;
-  const title = todoEl.querySelector(".todo-card__title").innerText;
-  const description = todoEl.querySelector(".todo-card__description").innerText;
-  const status = todoEl.querySelector("input[type='checkbox']").checked ? 1 : 0;
-  // console.log(status, id, title, description);
+  setTimeout(() => {
+    const todoEl = e.target.closest(".todo-card");
+    const id = todoEl.dataset.todoid;
+    const title = todoEl.querySelector(".todo-card__title").innerText;
+    const description = todoEl.querySelector(".todo-card__description")
+      .innerText;
+    const status = todoEl.querySelector("input[type='checkbox']").checked
+      ? 1
+      : 0;
+    // console.log(status, id, title, description);
 
-  dbfetch("/api/items/" + id, {
-    method: "PATCH",
-    body: new URLSearchParams({
-      title,
-      description,
-      status,
-    }),
-  });
+    dbfetch("/api/items/" + id, {
+      method: "PATCH",
+      body: new URLSearchParams({
+        title,
+        description,
+        status,
+      }),
+    });
+  }, 0);
 }
 
 document.addEventListener("update", (e) => updateTodo(e));
