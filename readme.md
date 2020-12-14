@@ -60,12 +60,6 @@ The database you intend to use needs to be formatted using the SQL file provided
 2. Find the `Import` option in the interface and open it
 3. Import the SQL file from this repository
 
-You can confirm that the database was set up correctly by running the following query towards it:
-
-```sql
-SELECT * FROM users WHERE id = test
-```
-
 ### Server (Apache)
 
 To be able to serve clean routes, the server needs to parse the URI of every request and send it to the index file. This is done using the [`.htaccess`](https://github.com/chas-academy/u04-todo-app-SkySails/blob/master/.htaccess) file. Make sure that your server is able to read this correctly.
