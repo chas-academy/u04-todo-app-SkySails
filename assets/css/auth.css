@@ -4,11 +4,11 @@
           box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Nunito', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Nunito", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
 #logo {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   font-weight: 900;
   font-size: 2em;
   color: #237bfe;
@@ -102,7 +102,7 @@ form {
 
 form h2 {
   font-size: 2.5em;
-  font-family: 'Poppins';
+  font-family: "Poppins";
 }
 
 form p {
@@ -138,7 +138,7 @@ input:focus {
 }
 
 input:-webkit-autofill::first-line {
-  font-family: 'Nunito';
+  font-family: "Nunito";
   font-size: 1rem;
   font-weight: bold;
   color: #8b9dbe;
@@ -146,6 +146,12 @@ input:-webkit-autofill::first-line {
 
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 1000px #071e41 inset;
+}
+
+.error {
+  color: red;
+  margin-bottom: 1em;
+  text-align: center;
 }
 
 .submit-btn {
@@ -172,11 +178,11 @@ input:-webkit-autofill {
   opacity: 0.4;
 }
 
-span {
+span:not(.error) {
   margin-top: 1.6em;
 }
 
-span a {
+span:not(.error) a {
   text-decoration: none;
   color: #237bfe;
   font-weight: bold;
