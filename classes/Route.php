@@ -78,6 +78,10 @@ class Route
                         array_shift($matches); // Remove basepath
                     }
 
+                    if (substr($path, 0, 4) == "/api") {
+                        header('Content-Type: application/json');
+                    }
+
                     call_user_func_array($route['function'], $matches);
 
                     $route_match_found = true;
