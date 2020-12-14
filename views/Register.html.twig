@@ -1,0 +1,36 @@
+{% extends 'auth.html.twig' %}
+
+{% block title %}
+  Register
+{% endblock %}
+
+{% block content %}
+  <main>
+    <section id="form-section">
+      <span id="logo">TodoApp</span>
+      <form method="post">
+        <h2>
+          Register
+        </h2>
+        <p>
+          Register now to get access
+        </p>
+
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" />
+        <label for="name">Email</label>
+        <input type="email" name="email" id="email" />
+        <label for="name">Password</label>
+        <input type="password" name="password" id="password" />
+        <button class="submit-btn"
+          onclick="document.querySelector('button').classList.add('clicked')">
+          Create account
+        </button>
+        <span>Already have an account? <a href="/login">Login</a></span>
+      </form>
+    </section>
+    <section id="info-section">
+      <img id="waves" src="/assets/img/waves.svg" alt="Waves" />
+    </section>
+  </main>
+{% endblock %}
