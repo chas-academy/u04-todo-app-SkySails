@@ -2,9 +2,16 @@
 
 class Index extends Controller
 {
-    public static function RenderView($params)
+    public static function RenderView($type = "full")
     {
         self::middleware();
-        echo Twig::render("Index", $params);
+
+        $data = TodoModel::getListsWithTodos();
+
+        if ($type == "template") {
+            echo Twig::render("todos", ["todolists" => $data]);
+        } else {
+            echo Twig::render("Index", ["todolists" => $data]);
+        }
     }
 }
