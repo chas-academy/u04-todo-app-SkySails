@@ -9,6 +9,7 @@
         {% endblock %}- Todoapp
       </title>
     {% endblock %}
+    <script src="/assets/js/app.js" defer></script>
   </head>
   <body>
     <header>
@@ -17,6 +18,7 @@
 
         {% endblock %}
       </span>
+      <span id="avatar">{{ session.username|split('')[0] }}</span>
     </header>
     {% block content %}
 
