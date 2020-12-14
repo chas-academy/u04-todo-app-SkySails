@@ -1,0 +1,112 @@
+{% for list_id, data in todolists %}
+  <section class="list-section" data-listid="{{ list_id }}">
+    <div class="dropdown">
+      <button onclick="toggleDropdown(event)" class="dropbtn">
+        <i></i>
+        <i></i>
+        <i></i>
+      </button>
+      <div id="myDropdown" class="dropdown-content">
+        <a style="color: red;" href="#" onclick="deleteList(event)">Delete</a>
+      </div>
+    </div>
+    <h2>
+      {{ data.name }}
+    </h2>
+    <ul class="todo-list">
+      {% for todo in data.todos %}
+        <li class="todo-card-base todo-card {{ todo.status ? 'done' }}"
+          data-todoid="{{ todo.id }}"
+          onclick="handleEditTodo(event)">
+          <div class="dropdown">
+            <button onclick="toggleDropdown(event)" class="dropbtn">
+              <i></i>
+              <i></i>
+              <i></i>
+            </button>
+            <div id="myDropdown" class="dropdown-content">
+              <a style="color: red;" href="#" onclick="deleteTodo(event)">
+                Delete
+              </a>
+            </div>
+          </div>
+          <input type="checkbox"
+            name="{{ todo.id }}"
+            id="{{ todo.id }}"
+            {{ todo.status ? 'checked' }}
+            onclick="event.target.closest('.todo-card').classList.toggle('done');sendEvent('update', event.target);" />
+          <label for="{{ todo.id }}"></label>
+          <div class="todo-card__content">
+            <h3 class="todo-card__title">
+              {{ todo.title }}
+            </h3>
+            <p class="todo-card__description">
+              {{ todo.description }}
+            </p>
+            <small class="todo-card__created-at">
+              Created at <time>{{ todo.created_at[0:16] }}</time>
+            </small>
+          </div>
+        </li>
+      {% endfor %}
+      <li class="todo-card-base todo-new-card">
+        <div class="lds-roller">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <div class="add-new-button" onclick="openForm(event)">
+          <ion-icon name="add-outline"></ion-icon>
+          <span>Add new item</span>
+        </div>
+        <form action="" autocomplete="off" onsubmit="handleTodoForm(event)">
+          <input type="checkbox" name="new-card" class="new-card" disabled />
+          <label for="new-card"></label>
+          <div class="todo-new-card__content">
+            <textarea class="title-textarea"
+              name="title"
+              class="todo-new-card__title"
+              placeholder="Title"
+              autofocus
+              required
+              oninput="adjustTAHeight(event)"></textarea>
+            <textarea placeholder="Description"
+              class="content-textarea"
+              name="description"
+              class="todo-new-card__description"
+              maxlength="200"
+              oninput="adjustTAHeight(event)"></textarea>
+            <button>Add item</button>
+          </div>
+        </form>
+      </li>
+    </ul>
+  </section>
+{% endfor %}
+<section id="new-list-container" class="list-section">
+  <ul>
+    <li>
+      <div class="add-new-button" onclick="openForm(event)">
+        <ion-icon name="add-outline"></ion-icon>
+        <span>Add list</span>
+      </div>
+      <form action="" autocomplete="off" onsubmit="addList(event)">
+        <input type="text"
+          class="title-textarea"
+          name="name"
+          id="new-list__name"
+          placeholder="Title"
+          autofocus
+          required
+          oninput="adjustTAHeight(event)" />
+
+        <button>Add list</button>
+      </form>
+    </li>
+  </ul>
+</section>
