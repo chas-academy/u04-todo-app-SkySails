@@ -17,6 +17,16 @@ class UserModel extends Database
                 $id = uniqid();
                 $pw_hash = password_hash($password, PASSWORD_BCRYPT);
                 self::query('INSERT INTO users (id, name, email, pw_hash) VALUES (?, ?, ?, ?)', array($id, $name, $email, $pw_hash));
+
+                session_start();
+
+                // Store data in session variables
+                $_SESSION["loggedin"] = true;
+                $_SESSION["id"] = $id;
+                $_SESSION["username"] = $name;
+
+                // Redirect user to welcome page
+                header("location: /");
             } else {
                 echo "Something went wrong.";
             }
