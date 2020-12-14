@@ -64,7 +64,7 @@ function updateLists() {
   const xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("list-container").innerHTML = this.responseText;
+      document.getElementById("index-page").innerHTML = this.responseText;
     }
   };
   xmlhttp.open("GET", "renderajax", true);
@@ -165,6 +165,22 @@ function deleteList(e) {
 
   dbfetch("/api/lists/" + listID, {
     method: "DELETE",
+  });
+}
+
+function deleteCompleted(e) {
+  const listID = e.currentTarget.closest("section").dataset.listid;
+
+  dbfetch("/api/lists/" + listID, {
+    method: "PURGE",
+  });
+}
+
+function completeAll(e) {
+  const listID = e.currentTarget.closest("section").dataset.listid;
+
+  dbfetch("/api/lists/" + listID, {
+    method: "PATCH",
   });
 }
 
