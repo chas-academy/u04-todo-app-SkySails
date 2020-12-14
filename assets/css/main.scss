@@ -405,13 +405,14 @@ input[type="checkbox"] + label {
   position: relative;
   display: flex;
   margin-bottom: 0.6em;
-  padding: 0.8em;
+  padding: 1.2em 1em;
   background: #01060c;
   border-radius: 0.5em;
   transition: 0.2s;
 
   .dropbtn {
-    right: 1em;
+    right: 0.5em;
+    top: 0.6em;
   }
 
   &:hover .dropbtn {
