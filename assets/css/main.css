@@ -215,6 +215,13 @@ main {
   overflow-x: auto;
 }
 
+main#account-page {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
 main h2 {
   margin-bottom: 10px;
   color: #abbddd;
@@ -421,7 +428,7 @@ input[type="checkbox"] + label:after {
 }
 
 .dropdown .dropdown-content a:hover {
-  background-color: #0f203a;
+  background-color: #01060e;
 }
 
 .todo-card-base .title-textarea {
@@ -500,6 +507,11 @@ input[type="checkbox"] + label:after {
   opacity: 0.5;
 }
 
+.todo-card.done h3,
+.todo-card.done p {
+  text-decoration: line-through;
+}
+
 .todo-card .todo-card__content {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -520,6 +532,8 @@ input[type="checkbox"] + label:after {
 .todo-card p {
   margin-top: 5px;
   font-size: 1em;
+  width: 86%;
+  word-wrap: break-word;
 }
 
 .todo-card small {
