@@ -1,4 +1,5 @@
 /*
+ Navicat Premium Data Transfer
 
  Source Server         : todoapp.se
  Source Server Type    : MySQL
@@ -10,7 +11,7 @@
  Target Server Version : 50724
  File Encoding         : 65001
 
- Date: 14/12/2020 21:28:37
+ Date: 14/12/2020 23:02:39
 */
 
 SET NAMES utf8mb4;
@@ -28,7 +29,7 @@ CREATE TABLE `lists`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `UserID_list`(`created_by`) USING BTREE,
   CONSTRAINT `UserID_list` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for todos
@@ -46,8 +47,8 @@ CREATE TABLE `todos`  (
   INDEX `UserID`(`created_by`) USING BTREE,
   INDEX `ListId`(`list_id`) USING BTREE,
   CONSTRAINT `UserID` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `ListId` FOREIGN KEY (`list_id`) REFERENCES `lists` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  CONSTRAINT `ListId` FOREIGN KEY (`list_id`) REFERENCES `lists` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 41 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for users
