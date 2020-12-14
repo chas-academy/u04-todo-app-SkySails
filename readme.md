@@ -15,6 +15,11 @@ TodoApp is a todo app (duh) that lets you easily manage and create todo lists an
 - [x] Include final SQL file in repository
 - [x] Actual todo functionality
 
+## Screenshots
+
+![The index page](https://user-images.githubusercontent.com/46646495/102143800-cd7b6580-3e64-11eb-8719-f0d7969f6a8b.png)
+![The login page](https://user-images.githubusercontent.com/46646495/102143877-e421bc80-3e64-11eb-834b-0c701f7d148d.png)
+
 ## Tech
 
 This assignment is based on a custom MVC framework and provides the ability to sign in, register, and use the application as an authenticated user. During development, MAMP was used to host the backend.
