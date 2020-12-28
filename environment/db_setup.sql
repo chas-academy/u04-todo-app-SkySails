@@ -1,19 +1,3 @@
-/*
- Navicat Premium Data Transfer
-
- Source Server         : todoapp.se
- Source Server Type    : MySQL
- Source Server Version : 50724
- Source Host           : localhost:3306
- Source Schema         : todoapp
-
- Target Server Type    : MySQL
- Target Server Version : 50724
- File Encoding         : 65001
-
- Date: 14/12/2020 23:02:39
-*/
-
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
