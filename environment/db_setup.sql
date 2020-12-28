@@ -27,8 +27,7 @@ CREATE TABLE `lists`  (
   `created_at` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `created_by` varchar(13) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `UserID_list`(`created_by`) USING BTREE,
-  CONSTRAINT `UserID_list` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  INDEX `UserID_list`(`created_by`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -45,9 +44,7 @@ CREATE TABLE `todos`  (
   `list_id` int(11) NULL DEFAULT NULL COMMENT 'The id for the list in which the dodo is listed',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `UserID`(`created_by`) USING BTREE,
-  INDEX `ListId`(`list_id`) USING BTREE,
-  CONSTRAINT `UserID` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `ListId` FOREIGN KEY (`list_id`) REFERENCES `lists` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
+  INDEX `ListId`(`list_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 41 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -62,8 +59,15 @@ CREATE TABLE `users`  (
   `created_at` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `modified_at` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`, `email`) USING BTREE,
-  UNIQUE INDEX `UserEmail`(`email`) USING BTREE COMMENT 'A user\'s email, should be unique',
+  UNIQUE INDEX `UserEmail`(`email`) USING BTREE COMMENT 'A users email, should be unique',
   INDEX `id`(`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+ALTER TABLE `lists`
+  ADD CONSTRAINT `UserID_list` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+--
+ALTER TABLE `todos`
+  ADD CONSTRAINT `UserID` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `ListId` FOREIGN KEY (`list_id`) REFERENCES `lists` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT;
