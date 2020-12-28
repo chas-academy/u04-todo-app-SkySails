@@ -1,9 +1,5 @@
 <?php declare (strict_types = 1);
 
-ini_set("xdebug.var_display_max_children", '-1');
-ini_set("xdebug.var_display_max_data", '-1');
-ini_set("xdebug.var_display_max_depth", '-1');
-
 class TodoModel extends Database
 {
     public static function getTodo(int $id)
