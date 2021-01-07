@@ -1,5 +1,6 @@
 <?php
 
+// The Route class is responsible for handling all routing (frontend and API) inside the framework.
 class Route
 {
 

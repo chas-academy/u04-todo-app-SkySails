@@ -2,12 +2,14 @@
 
 class UserModel extends Database
 {
+    // Get user data from user with id
     public static function getProfile(string $id)
     {
         $data = self::query('SELECT * FROM users WHERE id = ?', array($id));
         return $data[0];
     }
 
+    // Register user with provided params
     public static function registerUser(array $params)
     {
         if (isset($params)) {
@@ -15,11 +17,11 @@ class UserModel extends Database
 
             if ($name !== "" && $email !== "" && $password !== '') {
                 try {
-                    $id = uniqid();
-                    $pw_hash = password_hash($password, PASSWORD_BCRYPT);
-                    self::query('INSERT INTO users (id, name, email, pw_hash) VALUES (?, ?, ?, ?)', array($id, $name, $email, $pw_hash));
+                    $id = uniqid(); // Generate unique (as can be) id for user
+                    $pw_hash = password_hash($password, PASSWORD_BCRYPT); // Encrypt password and output hash (contains hashed password AND salt)
+                    self::query('INSERT INTO users (id, name, email, pw_hash) VALUES (?, ?, ?, ?)', array($id, $name, $email, $pw_hash)); // Store user data
 
-                    session_start();
+                    session_start(); // Start a user session
 
                     // Store data in session variables
                     $_SESSION["loggedin"] = true;
@@ -37,9 +39,13 @@ class UserModel extends Database
         }
 
     }
+
+    // Sign in user with provided params
     public static function signinUser($params)
     {
         extract($params);
+
+        // If required parameters are available (Uns)
         if ($password !== "" && $email !== "") {
 
             try {
@@ -49,6 +55,7 @@ class UserModel extends Database
                     $user = $user[0];
 
                     if (password_verify($password, $user["pw_hash"])) {
+
                         // Password is correct, start a new session
                         session_start();
 
@@ -69,6 +76,8 @@ class UserModel extends Database
                 header("location: /login?err=db_err");
             }
 
+        } else {
+            header("location: /login?err=invalid_details");
         }
 
     }

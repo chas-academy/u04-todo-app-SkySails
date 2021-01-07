@@ -1,27 +1,30 @@
 <?php
 
+// Auth controller. Renders authentication routes and handles redirects.
 class Auth extends Controller
 {
-    public static function RenderView($viewtype)
+    public static function RenderLogin()
     {
-        if ($viewtype == "login") {
-            session_start();
+        session_start();
 
-            if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
-                header("location: /");
-                exit;
-            }
-
-            echo Twig::render("Login");
-        } else {
-
-            if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
-                header("location: /");
-                exit;
-            }
-
-            echo Twig::render("Register");
+        // If user is already logged in, redirect to dashbaord
+        if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
+            header("location: /");
+            exit;
         }
+
+        echo Twig::render("Login");
+    }
+
+    public static function RenderRegister()
+    {
+        // If user is already logged in, redirect to dashbaord
+        if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
+            header("location: /");
+            exit;
+        }
+
+        echo Twig::render("Register");
     }
 
 }

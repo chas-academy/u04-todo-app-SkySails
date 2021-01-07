@@ -27,7 +27,7 @@ HTML;
 //?###################
 
 Route::add('/register', function () {
-    Auth::RenderView("register"); // Renders an authentication page with a registration form
+    Auth::RenderRegister(); // Renders an authentication page with a registration form
 });
 
 Route::add('/register', function () {
@@ -35,7 +35,7 @@ Route::add('/register', function () {
 }, "post");
 
 Route::add('/login', function () {
-    Auth::RenderView("login"); // Renders an authentication page with a login form
+    Auth::RenderLogin("login"); // Renders an authentication page with a login form
 });
 
 Route::add('/login', function () {
