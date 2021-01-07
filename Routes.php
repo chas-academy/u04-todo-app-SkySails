@@ -5,15 +5,21 @@
 //?###################
 
 Route::add('/', function () {
-    Index::RenderView();
+    Index::RenderView(); // Renders index (Dashboard) page
 });
 
 Route::add('/renderajax', function () {
-    Index::RenderView("template");
+    Index::RenderView("template"); // Renders ONLY the lists and their content (used for AJAX requests)
 });
 
 Route::add('/account', function () {
-    Account::RenderView();
+    Account::RenderView(); // Renders a view showing account details
+});
+
+Route::pathNotFound(function () { // Very creative 404 page
+    echo <<<HTML
+        <h1>Oopsie! Not found :(</h1>
+HTML;
 });
 
 //?###################
@@ -21,40 +27,31 @@ Route::add('/account', function () {
 //?###################
 
 Route::add('/register', function () {
-    Auth::RenderView("register");
+    Auth::RenderView("register"); // Renders an authentication page with a registration form
 });
 
 Route::add('/register', function () {
-    UserModel::registerUser($_POST);
+    UserModel::registerUser($_POST); // Handles POST requests to the registration screen (used to handle registration)
 }, "post");
 
 Route::add('/login', function () {
-    Auth::RenderView("login");
+    Auth::RenderView("login"); // Renders an authentication page with a login form
 });
 
 Route::add('/login', function () {
-    UserModel::signinUser($_POST);
+    UserModel::signinUser($_POST); // Handles POST requests to the login screen (used to handle signin)
 }, "post");
 
 //?###################
 //?   API routes    ##
 //?###################
 
-// Get all lists
-Route::add('/api/lists', function () {
-    session_start();
-    echo "Get all lists" . $_SESSION["id"];
-});
+// Not finished, since it is out of scope for this assignment. The below is just a POC showing the capability of my MVC framework
 
 // Create list
 Route::add('/api/lists', function () {
     TodoModel::addList($_POST["name"]);
 }, "post");
-
-// Get list with id
-Route::add('/api/lists/:id', function ($list_id) {
-    echo "Get list with id: " . $list_id;
-});
 
 // Delete list with id
 Route::add('/api/lists/:id', function ($list_id) {
@@ -71,38 +68,32 @@ Route::add('/api/lists/:id', function ($list_id) {
     TodoModel::completeAllInList($list_id);
 }, "patch");
 
-// Get items
-Route::add('/api/items', function () {
-    echo "Get all items";
+// Get todos from list
+Route::add('/api/:id/todo', function ($list_id) {
+    TodoModel::getListsWithTodos($list_id);
 });
 
-// Add item
-Route::add('/api/items', function () {
-    // echo "Add item with title: " . $_POST["title"];
+// Add todo
+Route::add('/api/todo', function () {
     TodoModel::addTodo($_POST);
 }, "post");
 
-// Get item with id
-Route::add('/api/items/:id', function ($item_id) {
-    echo "Get item with id: " . $item_id;
+// Get todo with id
+Route::add('/api/todo/:id', function ($todo_id) {
+    TodoModel::getTodo($todo_id);
 });
 
-// Update item with id
-Route::add('/api/items/:id', function ($item_id) {
-    parse_str(file_get_contents('php://input'), $_PATCH);
+// Update todo with id
+Route::add('/api/todo/:id', function ($todo_id) {
+    parse_str(file_get_contents('php://input'), $_PATCH); // Parse contents of PATCH request
 
-    TodoModel::updateTodo(intval($item_id), $_PATCH);
+    TodoModel::updateTodo(intval($todo_id), $_PATCH);
 }, "patch");
 
-// Delete item with id
-Route::add('/api/items/:id', function ($item_id) {
-    TodoModel::deleteTodo($item_id);
+// Delete todo with id
+Route::add('/api/todo/:id', function ($todo_id) {
+    TodoModel::deleteTodo($todo_id);
 }, "delete");
 
-Route::pathNotFound(function () {
-    echo <<<HTML
-        <h1>Oopsie! Not found :(</h1>
-HTML;
-});
-
+// Execute/add all above routes using "/" as basepath.
 Route::run("/");
